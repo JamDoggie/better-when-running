@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = net.minecraft.server.entity.player.EntityPlayerMP.class, remap = false)
-public class EntityPlayerMPMixin extends EntityPlayer
+public abstract class EntityPlayerMPMixin extends EntityPlayer
 {
 	@Shadow
 	public NetServerHandler playerNetServerHandler;

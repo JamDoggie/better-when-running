@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = EntityPlayerSP.class, remap = false)
-public class EntityPlayerSPMixin extends EntityPlayer
+public abstract class EntityPlayerSPMixin extends EntityPlayer
 {
 	@Shadow
 	protected Minecraft mc;
@@ -23,7 +23,7 @@ public class EntityPlayerSPMixin extends EntityPlayer
 		super(world);
 	}
 
-	@Inject(method = "onLivingUpdate()V", at = @At("TAIL"))
+	@Inject(method = "onLivingUpdate()V", at = @At("TAIL"), remap = false)
 	private void playerSPTick(CallbackInfo ci)
 	{
 		IEntityPlayerMixin playerMixin = (IEntityPlayerMixin)this;
@@ -39,5 +39,15 @@ public class EntityPlayerSPMixin extends EntityPlayer
 	public void func_6420_o()
 	{
 
+	}
+
+	@Override
+	public void sendMessage(String message) {
+		this.mc.ingameGUI.addChatMessage(message);
+	}
+
+	@Override
+	public void sendStatusMessage(String message) {
+		this.mc.ingameGUI.guiHeldItemTooltip.setString(message);
 	}
 }
